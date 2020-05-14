@@ -32,9 +32,9 @@ var filters = {};
 // This function will replace your handleClick function
 function updateFilters() {
   
-  d3.select("#filter-btn").on("change",updateFilters);
+  
   // Save the element, value, and id of the filter that was changed
-  let changedElement = d3.select(this).select("input");
+  let changedElement = d3.select(this);
   let elementValue = changedElement.property("value");
   let filterId = changedElement.attr("id")
 
@@ -54,10 +54,10 @@ function filterTable()
  {
  
   // Set the filteredData to the tableData
-  let filterData = tableData
+  let filteredData = tableData
   // Loop through all of the filters and keep any data that
   // matches the filter values
-  Object.defineProperties(filters).forEach(([key,value]) =>{
+  Object.entries(filters).forEach(([key,value]) =>{
     filteredData = filteredData.filter(row => row[key]=== value);
   });
   // Finally, rebuild the table using the filtered Data
@@ -66,7 +66,7 @@ function filterTable()
 
 // Attach an event to listen for changes to each filter
 // Hint: You'll need to select the event and what it is listening for within each set of parenthesis
-d3.selectAll("#filter-btn").on("change", updateFilters);
-
+d3.selectAll(".inputs").on("change", updateFilters);
+d3.select("#filter-btn").on("click",filterTable);
 // Build the table when the page loads
 buildTable(tableData);
